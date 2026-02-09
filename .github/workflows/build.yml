@@ -19,6 +19,22 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
-    - name: Build
+
+    - name: Publish Release
       run: |
-        dotnet build app/GHelper.sln
+        dotnet publish app/GHelper.sln --configuration Release --runtime win-x64 -p:PublishSingleFile=true --no-self-contained
+
+    - name: Create ZIP
+      run: powershell Compress-Archive -Path app/bin/x64/Release/net8.0-windows/win-x64/publish/GHelper.exe -DestinationPath app/bin/x64/Release/net8.0-windows/win-x64/publish/GHelper.zip -Force
+
+    - name: Upload GHelper.exe
+      uses: actions/upload-artifact@v4
+      with:
+        name: GHelper-exe
+        path: app/bin/x64/Release/net8.0-windows/win-x64/publish/GHelper.exe
+
+    - name: Upload GHelper.zip
+      uses: actions/upload-artifact@v4
+      with:
+        name: GHelper-zip
+        path: app/bin/x64/Release/net8.0-windows/win-x64/publish/GHelper.zip
