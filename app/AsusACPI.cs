@@ -342,8 +342,8 @@ public class AsusACPI
 
         if (AppConfig.ContainsModel("FA401EA"))
         {
-            MaxTotal = 115;
-            MaxCPU = 115;
+            MaxTotal = 125;
+            MaxCPU = 125;
         }
 
     }
